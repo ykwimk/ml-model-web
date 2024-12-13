@@ -1,5 +1,6 @@
-import BackButton from '@/components/BackButton';
 import { use } from 'react';
+import BackButton from '@/components/BackButton';
+import ModelDetailContainer from '@/components/ModelDetailContainer';
 
 interface Props {
   params: Promise<{ modelId: string }>;
@@ -17,6 +18,7 @@ export default function ModelDetailPage({ params }: Props) {
         </h1>
       </div>
       <p className="text-gray-600">이 모델에 대한 간단한 설명 문구.</p>
+      <ModelDetailContainer modelId={modelId} />
     </div>
   );
 }
