@@ -10,8 +10,8 @@ interface Props {
 export default function ModelCard({ modelId, name, description }: Props) {
   return (
     <Link
-      href=""
       className="block rounded-lg border bg-white p-4 transition hover:shadow-lg"
+      href={`/models/${modelId}`}
     >
       <div className="flex items-center justify-between gap-2">
         <div>
