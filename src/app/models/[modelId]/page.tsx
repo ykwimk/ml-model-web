@@ -1,11 +1,12 @@
 import BackButton from '@/components/BackButton';
+import { use } from 'react';
 
 interface Props {
-  params: { modelId: string };
+  params: Promise<{ modelId: string }>;
 }
 
 export default function ModelDetailPage({ params }: Props) {
-  const { modelId } = params;
+  const { modelId } = use(params);
 
   return (
     <div className="space-y-6">
