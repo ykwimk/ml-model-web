@@ -10,7 +10,7 @@ export default function Page() {
   return (
     <div className="space-y-8">
       <section className="text-center">
-        <h1 className="text-3xl font-bold">ML Models Demo WEB</h1>
+        <h1 className="text-3xl font-bold">ML Models Demo Web</h1>
         <p className="mt-2 text-gray-600">
           다양한 머신러닝 모델 데모를 체험해보세요.
         </p>
