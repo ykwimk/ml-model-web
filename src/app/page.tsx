@@ -1,12 +1,7 @@
-export default function Page() {
-  const models = [
-    { id: 0, name: 'AAAA', description: 'aaaa' },
-    { id: 1, name: 'BBBB', description: 'bbbb' },
-    { id: 2, name: 'CCCC', description: 'cccc' },
-    { id: 3, name: 'DDDD', description: 'dddd' },
-    { id: 4, name: 'EEEE', description: 'eeee' },
-  ];
+import ModelCard from '@/components/ModelCard';
+import { MODELS } from '@/constants';
 
+export default function Page() {
   return (
     <div className="space-y-8">
       <section className="text-center">
@@ -16,11 +11,13 @@ export default function Page() {
         </p>
       </section>
       <section className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3">
-        {models.map((model) => (
-          <div key={model.id}>
-            <div>{model.name}</div>
-            <div>{model.description}</div>
-          </div>
+        {MODELS.map((model) => (
+          <ModelCard
+            key={model.id}
+            modelId={model.id}
+            name={model.name}
+            description={model.description}
+          />
         ))}
       </section>
     </div>

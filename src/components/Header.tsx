@@ -3,8 +3,8 @@ import { FiGithub } from 'react-icons/fi';
 
 export default function Header() {
   return (
-    <header className="border-b bg-white p-4">
-      <div className="mx-auto flex max-w-5xl items-center justify-between">
+    <header className="border-b bg-white px-4 py-4 md:px-8">
+      <div className="mx-auto flex max-w-5xl items-center justify-between md:max-w-full">
         <Link href="/" className="text-2xl">
           🤖
         </Link>
