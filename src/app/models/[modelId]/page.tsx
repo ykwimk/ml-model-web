@@ -1,6 +1,7 @@
 import { use } from 'react';
 import BackButton from '@/components/BackButton';
 import ModelDetailContainer from '@/components/ModelDetailContainer';
+import { MODELS } from '@/constants';
 
 interface Props {
   params: Promise<{ modelId: string }>;
@@ -8,6 +9,17 @@ interface Props {
 
 export default function ModelDetailPage({ params }: Props) {
   const { modelId } = use(params);
+
+  const modelById = MODELS.find((model) => model.id === modelId);
+
+  if (!modelById) {
+    return (
+      <div className="space-y-6">
+        <BackButton />
+        <h1 className="text-2xl font-bold">Model not found</h1>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -17,7 +29,17 @@ export default function ModelDetailPage({ params }: Props) {
           {modelId.replaceAll('-', ' ')}
         </h1>
       </div>
-      <p className="text-gray-600">이 모델에 대한 간단한 설명 문구.</p>
+      {modelById.description && (
+        <p className="mt-2 break-keep text-gray-600">{modelById.description}</p>
+      )}
+      {modelById.baseModel && (
+        <p className="mt-1 text-sm text-gray-500">
+          Powered by:{' '}
+          <span className="rounded bg-gray-100 p-0.5 font-mono">
+            {modelById.baseModel}
+          </span>
+        </p>
+      )}
       <ModelDetailContainer modelId={modelId} />
     </div>
   );

@@ -16,7 +16,7 @@ export default function Page() {
             key={model.id}
             modelId={model.id}
             name={model.name}
-            description={model.description}
+            caption={model.caption}
           />
         ))}
       </section>
