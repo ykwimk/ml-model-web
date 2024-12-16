@@ -40,7 +40,7 @@ export default function ModelDetailPage({ params }: Props) {
           </span>
         </p>
       )}
-      <ModelDetailContainer modelId={modelId} />
+      <ModelDetailContainer modelById={modelById} />
     </div>
   );
 }

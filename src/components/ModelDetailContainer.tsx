@@ -11,25 +11,36 @@ interface Props {
 }
 
 export default function ModelDetailContainer({ modelById }: Props) {
-  const [value, setValue] = useState<string>('');
+  const [text, setText] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const inputType = modelById.inputType;
 
   const handleSubmit = async () => {
-    const data = inputType === 'text' ? value : file;
+    try {
+      const response = await fetch(`/api/models/${modelById.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(text),
+      });
 
-    console.log('data: ', data);
+      const result = await response.json();
+      console.log(result);
+    } catch (error: unknown) {
+      console.error(error);
+    }
   };
 
   return (
     <div className="space-y-6">
       {inputType === 'text' && (
         <TextInputSection
-          value={value}
+          text={text}
           isLoading={isLoading}
-          onInputChange={setValue}
+          onInputChange={setText}
           onSubmit={handleSubmit}
         />
       )}

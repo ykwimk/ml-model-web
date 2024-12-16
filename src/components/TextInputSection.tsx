@@ -1,14 +1,14 @@
 import React from 'react';
 
 interface Props {
-  value: string;
+  text: string;
   isLoading: boolean;
-  onInputChange: (value: string) => void;
+  onInputChange: (text: string) => void;
   onSubmit: () => void;
 }
 
 export default function InputSection({
-  value,
+  text,
   isLoading,
   onInputChange,
   onSubmit,
@@ -19,7 +19,7 @@ export default function InputSection({
         id="textarea"
         className="h-64 w-full resize-none rounded border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="텍스트를 입력하거나 이미지를 업로드하세요."
-        value={value}
+        value={text}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
           onInputChange(e.target.value)
         }
@@ -27,7 +27,7 @@ export default function InputSection({
       <button
         type="button"
         className="rounded bg-blue-600 px-4 py-2 text-white hover:bg-blue-700 disabled:opacity-50"
-        disabled={isLoading || !value.trim()}
+        disabled={isLoading || !text.trim()}
         onClick={onSubmit}
       >
         {isLoading ? '분석중...' : '분석하기'}
