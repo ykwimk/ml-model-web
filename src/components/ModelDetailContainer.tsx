@@ -1,28 +1,54 @@
 'use client';
 
 import { useState } from 'react';
-import InputSection from './InputSection';
+import TextInputSection from './TextInputSection';
+import { IModel } from '@/types';
+import ImageUploadSection from './ImageUploadSection';
+import AudioUploadSection from './AudioUploadSection';
 
 interface Props {
-  modelId: string;
+  modelById: IModel;
 }
 
-export default function ModelDetailContainer({ modelId }: Props) {
-  const [value, setInput] = useState<string>('');
+export default function ModelDetailContainer({ modelById }: Props) {
+  const [value, setValue] = useState<string>('');
+  const [file, setFile] = useState<File | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSubmit = () => {
-    console.log('modelId: ', modelId);
+  const inputType = modelById.inputType;
+
+  const handleSubmit = async () => {
+    const data = inputType === 'text' ? value : file;
+
+    console.log('data: ', data);
   };
 
   return (
     <div className="space-y-6">
-      <InputSection
-        value={value}
-        isLoading={isLoading}
-        onInputChange={setInput}
-        onSubmit={handleSubmit}
-      />
+      {inputType === 'text' && (
+        <TextInputSection
+          value={value}
+          isLoading={isLoading}
+          onInputChange={setValue}
+          onSubmit={handleSubmit}
+        />
+      )}
+      {inputType === 'image' && (
+        <ImageUploadSection
+          file={file}
+          isLoading={isLoading}
+          onFileChange={setFile}
+          onSubmit={handleSubmit}
+        />
+      )}
+      {inputType === 'audio' && (
+        <AudioUploadSection
+          file={file}
+          isLoading={isLoading}
+          onFileChange={setFile}
+          onSubmit={handleSubmit}
+        />
+      )}
     </div>
   );
 }

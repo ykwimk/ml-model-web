@@ -3,6 +3,10 @@ export interface IModel {
   name: string;
   caption: string;
   baseModel: string;
-  inputType: 'text' | 'image' | 'audio';
+  inputType: InputType;
   description: string;
 }
+
+export type InputType = 'text' | 'image' | 'audio';
+
+export type InputValueType = string | File | null;

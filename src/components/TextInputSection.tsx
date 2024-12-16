@@ -3,7 +3,7 @@ import React from 'react';
 interface Props {
   value: string;
   isLoading: boolean;
-  onInputChange: (val: string) => void;
+  onInputChange: (value: string) => void;
   onSubmit: () => void;
 }
 
