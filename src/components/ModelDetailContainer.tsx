@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import TextInputSection from './TextInputSection';
 import { IModel } from '@/types';
 import ImageUploadSection from './ImageUploadSection';
@@ -13,12 +13,13 @@ interface Props {
 export default function ModelDetailContainer({ modelById }: Props) {
   const [text, setText] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const [isPending, startTransition] = useTransition();
 
   const inputType = modelById.inputType;
 
-  const handleSubmit = async () => {
-    try {
+  const handleSubmit = () => {
+    startTransition(async () => {
       const response = await fetch(`/api/models/${modelById.id}`, {
         method: 'POST',
         headers: {
@@ -29,9 +30,7 @@ export default function ModelDetailContainer({ modelById }: Props) {
 
       const result = await response.json();
       console.log(result);
-    } catch (error: unknown) {
-      console.error(error);
-    }
+    });
   };
 
   return (
@@ -39,7 +38,7 @@ export default function ModelDetailContainer({ modelById }: Props) {
       {inputType === 'text' && (
         <TextInputSection
           text={text}
-          isLoading={isLoading}
+          isLoading={isPending}
           onInputChange={setText}
           onSubmit={handleSubmit}
         />
@@ -47,7 +46,7 @@ export default function ModelDetailContainer({ modelById }: Props) {
       {inputType === 'image' && (
         <ImageUploadSection
           file={file}
-          isLoading={isLoading}
+          isLoading={isPending}
           onFileChange={setFile}
           onSubmit={handleSubmit}
         />
@@ -55,7 +54,7 @@ export default function ModelDetailContainer({ modelById }: Props) {
       {inputType === 'audio' && (
         <AudioUploadSection
           file={file}
-          isLoading={isLoading}
+          isLoading={isPending}
           onFileChange={setFile}
           onSubmit={handleSubmit}
         />
