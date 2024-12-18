@@ -5,6 +5,8 @@ import TextInputSection from './TextInputSection';
 import { IModel } from '@/types';
 import ImageUploadSection from './ImageUploadSection';
 import AudioUploadSection from './AudioUploadSection';
+import LoadingSpinner from './LoadingSpinner';
+import ResultSection from './ResultSection';
 
 interface Props {
   modelById: IModel;
@@ -13,6 +15,7 @@ interface Props {
 export default function ModelDetailContainer({ modelById }: Props) {
   const [text, setText] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
+  const [result, setResult] = useState<string | null>(null);
 
   const [isPending, startTransition] = useTransition();
 
@@ -28,8 +31,8 @@ export default function ModelDetailContainer({ modelById }: Props) {
         body: JSON.stringify(text),
       });
 
-      const result = await response.json();
-      console.log(result);
+      const data = await response.json();
+      setResult(data.result[0].summary_text);
     });
   };
 
@@ -58,6 +61,11 @@ export default function ModelDetailContainer({ modelById }: Props) {
           onFileChange={setFile}
           onSubmit={handleSubmit}
         />
+      )}
+      {isPending ? (
+        <LoadingSpinner />
+      ) : (
+        result && <ResultSection result={result} />
       )}
     </div>
   );

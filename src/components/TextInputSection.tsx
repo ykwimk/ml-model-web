@@ -20,6 +20,7 @@ export default function InputSection({
         className="h-64 w-full resize-none rounded border p-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
         placeholder="텍스트를 입력하거나 이미지를 업로드하세요."
         value={text}
+        disabled={isLoading}
         onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
           onInputChange(e.target.value)
         }
