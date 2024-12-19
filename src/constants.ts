@@ -15,10 +15,10 @@ export const MODELS: IModel[] = [
     id: 'translator',
     name: 'Translator',
     caption: '영어, 한국어 등 다국어 간 번역을 제공하는 모델',
-    baseModel: 'Helsinki-NLP/opus-mt-en-ko', // 언어 방향(en->ko 등)에 따라 모델 선택 가능: https://huggingface.co/Helsinki-NLP
+    baseModel: 'Helsinki-NLP/opus-mt-en-de', // 언어 방향(en->de 등)에 따라 모델 선택 가능: https://huggingface.co/Helsinki-NLP
     inputType: 'text',
     description:
-      'Helsinki-NLP 시리즈 모델. 다양한 언어 쌍 번역을 지원하며, 여기서는 영어→한국어 번역 예제로 설정.',
+      'Helsinki-NLP 시리즈 모델. 다양한 언어 쌍 번역을 지원하며, 여기서는 영어→독일어 번역 예제로 설정.',
   },
   {
     id: 'sentiment-analysis',
@@ -99,3 +99,8 @@ export const MODELS: IModel[] = [
       'ViT + GPT-2를 결합한 이미지 캡션 생성 모델. 이미지 입력 시 상황에 맞는 문장 설명을 생성.',
   },
 ];
+
+export const modelResultKey: { [key: string]: string } = {
+  'text-summarizer': 'summary_text',
+  translator: 'translation_text',
+};

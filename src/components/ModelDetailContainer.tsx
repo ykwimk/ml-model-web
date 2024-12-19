@@ -7,6 +7,7 @@ import ImageUploadSection from './ImageUploadSection';
 import AudioUploadSection from './AudioUploadSection';
 import LoadingSpinner from './LoadingSpinner';
 import ResultSection from './ResultSection';
+import { modelResultKey } from '@/constants';
 
 interface Props {
   modelById: IModel;
@@ -32,7 +33,10 @@ export default function ModelDetailContainer({ modelById }: Props) {
       });
 
       const data = await response.json();
-      setResult(data.result[0].summary_text);
+      const id = modelById.id;
+      const modelResultKeyById = modelResultKey[id];
+
+      setResult(data.result[0][modelResultKeyById]);
     });
   };
 
