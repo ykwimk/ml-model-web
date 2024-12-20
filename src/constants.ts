@@ -24,7 +24,7 @@ export const MODELS: IModel[] = [
     id: 'sentiment-analysis',
     name: 'Sentiment Analysis',
     caption: '문장의 감정(긍정/부정/중립)을 분석하는 모델',
-    baseModel: 'nlptown/bert-base-multilingual-uncased-sentiment',
+    baseModel: 'ProsusAI/finbert',
     inputType: 'text',
     description:
       '다국어 감정분석 모델. 입력 텍스트의 감정을 긍정~부정 스펙트럼으로 분석.',
@@ -103,4 +103,5 @@ export const MODELS: IModel[] = [
 export const modelResultKey: { [key: string]: string } = {
   'text-summarizer': 'summary_text',
   translator: 'translation_text',
+  'sentiment-analysis': 'sentiment-analysis',
 };

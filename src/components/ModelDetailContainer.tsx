@@ -16,7 +16,7 @@ interface Props {
 export default function ModelDetailContainer({ modelById }: Props) {
   const [text, setText] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
-  const [result, setResult] = useState<string | null>(null);
+  const [result, setResult] = useState<string | [] | null>(null);
 
   const [isPending, startTransition] = useTransition();
 
@@ -35,8 +35,13 @@ export default function ModelDetailContainer({ modelById }: Props) {
       const data = await response.json();
       const id = modelById.id;
       const modelResultKeyById = modelResultKey[id];
+      const result = data.result[0];
 
-      setResult(data.result[0][modelResultKeyById]);
+      if (modelResultKeyById === 'sentiment-analysis') {
+        setResult(result);
+      } else {
+        setResult(result[modelResultKeyById]);
+      }
     });
   };
 
