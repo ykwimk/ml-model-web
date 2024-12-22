@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .modal-enter {
+    @apply opacity-0;
+  }
+  .modal-enter-active {
+    @apply opacity-100 transition duration-300;
+  }
+  .modal-exit {
+    @apply opacity-100;
+  }
+  .modal-exit-active {
+    @apply opacity-0 transition duration-300;
+  }
+}

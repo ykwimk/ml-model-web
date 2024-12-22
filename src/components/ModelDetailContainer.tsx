@@ -8,6 +8,7 @@ import AudioUploadSection from './AudioUploadSection';
 import LoadingSpinner from './LoadingSpinner';
 import ResultSection from './ResultSection';
 import { modelResultKey } from '@/constants';
+import ErrorModal from './ErrorModal';
 
 interface Props {
   modelById: IModel;
@@ -16,6 +17,7 @@ interface Props {
 export default function ModelDetailContainer({ modelById }: Props) {
   const [text, setText] = useState<string>('');
   const [file, setFile] = useState<File | null>(null);
+  const [error, setError] = useState<string>('');
   const [result, setResult] = useState<string | [] | null>(null);
 
   const [isPending, startTransition] = useTransition();
@@ -33,15 +35,21 @@ export default function ModelDetailContainer({ modelById }: Props) {
       });
 
       const data = await response.json();
+      console.log('data: ', data);
       const id = modelById.id;
       const modelResultKeyById = modelResultKey[id];
-      const result = data.result[0];
 
-      if (modelResultKeyById === 'sentiment-analysis') {
-        setResult(result);
-      } else {
-        setResult(result[modelResultKeyById]);
+      if (data.error) {
+        setError(data.error);
+        return;
       }
+
+      const result =
+        modelResultKeyById === 'sentiment-analysis'
+          ? data.result[0]
+          : data.result[0][modelResultKeyById];
+
+      setResult(result);
     });
   };
 
@@ -76,6 +84,11 @@ export default function ModelDetailContainer({ modelById }: Props) {
       ) : (
         result && <ResultSection result={result} />
       )}
+      <ErrorModal
+        isOpen={!!error}
+        errorMessage={error}
+        onClose={() => setError('')}
+      />
     </div>
   );
 }
