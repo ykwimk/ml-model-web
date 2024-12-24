@@ -43,21 +43,22 @@ export default function ModelDetailContainer({ modelById }: Props) {
         body,
       });
 
-      const data = await response.json();
       const id = modelById.id;
       const modelResultKeyById = modelResultKey[id];
+      const data = await response.json();
 
       if (data.error) {
         setError(data.error);
         return;
       }
 
-      const result =
-        modelResultKeyById === 'sentiment-analysis'
-          ? data.result[0]
-          : modelResultKeyById === 'image-classifier'
-            ? data.result
-            : data.result[0][modelResultKeyById];
+      let result = data.result[0][modelResultKeyById];
+
+      if (modelResultKeyById === 'sentiment-analysis') {
+        result = data.result[0];
+      } else if (modelResultKeyById === 'image-classifier') {
+        result = data.result;
+      }
 
       setResult(result);
     });

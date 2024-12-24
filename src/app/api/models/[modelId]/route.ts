@@ -28,6 +28,7 @@ export async function POST(
   };
 
   if (model.inputType === 'image') {
+    // 이미지 입력 타입
     const { base64 } = await request.json();
 
     if (!base64) {
@@ -37,6 +38,7 @@ export async function POST(
     body = Buffer.from(base64, 'base64');
     headers['Content-Type'] = 'application/octet-stream';
   } else {
+    // 텍스트 입력 타입
     body = await request.json();
     headers['Content-Type'] = 'application/json';
   }
