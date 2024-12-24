@@ -104,4 +104,5 @@ export const modelResultKey: { [key: string]: string } = {
   'text-summarizer': 'summary_text',
   translator: 'translation_text',
   'sentiment-analysis': 'sentiment-analysis',
+  'image-classifier': 'image-classifier',
 };

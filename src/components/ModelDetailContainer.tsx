@@ -9,6 +9,7 @@ import LoadingSpinner from './LoadingSpinner';
 import ResultSection from './ResultSection';
 import { modelResultKey } from '@/constants';
 import ErrorModal from './ErrorModal';
+import { fileToBase64 } from '@/utils';
 
 interface Props {
   modelById: IModel;
@@ -26,16 +27,23 @@ export default function ModelDetailContainer({ modelById }: Props) {
 
   const handleSubmit = () => {
     startTransition(async () => {
+      let body: string | File = JSON.stringify(text);
+
+      if (file && inputType === 'image') {
+        const base64 = await fileToBase64(file);
+
+        body = JSON.stringify({ base64 });
+      }
+
       const response = await fetch(`/api/models/${modelById.id}`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(text),
+        body,
       });
 
       const data = await response.json();
-      console.log('data: ', data);
       const id = modelById.id;
       const modelResultKeyById = modelResultKey[id];
 
@@ -47,7 +55,9 @@ export default function ModelDetailContainer({ modelById }: Props) {
       const result =
         modelResultKeyById === 'sentiment-analysis'
           ? data.result[0]
-          : data.result[0][modelResultKeyById];
+          : modelResultKeyById === 'image-classifier'
+            ? data.result
+            : data.result[0][modelResultKeyById];
 
       setResult(result);
     });

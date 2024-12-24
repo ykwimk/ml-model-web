@@ -21,16 +21,31 @@ export async function POST(
     );
   }
 
-  const body = await request.json();
+  let body: string | Buffer;
+
+  const headers: Record<string, string> = {
+    Authorization: `Bearer ${apiKey}`,
+  };
+
+  if (model.inputType === 'image') {
+    const { base64 } = await request.json();
+
+    if (!base64) {
+      return NextResponse.json({ error: 'No file found' }, { status: 400 });
+    }
+
+    body = Buffer.from(base64, 'base64');
+    headers['Content-Type'] = 'application/octet-stream';
+  } else {
+    body = await request.json();
+    headers['Content-Type'] = 'application/json';
+  }
 
   try {
     const URL = `https://api-inference.huggingface.co/models/${model.baseModel}`;
     const response = await fetch(URL, {
       method: 'POST',
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        'Content-Type': 'application/json',
-      },
+      headers,
       body,
     });
 
