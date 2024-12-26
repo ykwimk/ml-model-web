@@ -105,4 +105,5 @@ export const modelResultKey: { [key: string]: string } = {
   translator: 'translation_text',
   'sentiment-analysis': 'sentiment-analysis',
   'image-classifier': 'image-classifier',
+  'object-detection': 'object-detection',
 };

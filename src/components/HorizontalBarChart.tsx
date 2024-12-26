@@ -1,4 +1,5 @@
 import React from 'react';
+import { nanoid } from 'nanoid';
 
 interface BarData {
   label: string;
@@ -18,7 +19,7 @@ export default function HorizontalBarChart({ data }: Props) {
         const percentage = (item.score / maxScore) * 100;
 
         return (
-          <div key={item.label} className="flex flex-col">
+          <div key={nanoid()} className="flex flex-col">
             <div className="mb-1 flex justify-between">
               <span className="font-medium capitalize text-gray-700">
                 {item.label}

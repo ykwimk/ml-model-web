@@ -52,12 +52,17 @@ export default function ModelDetailContainer({ modelById }: Props) {
         return;
       }
 
-      let result = data.result[0][modelResultKeyById];
+      let result;
 
       if (modelResultKeyById === 'sentiment-analysis') {
         result = data.result[0];
-      } else if (modelResultKeyById === 'image-classifier') {
+      } else if (
+        modelResultKeyById === 'image-classifier' ||
+        modelResultKeyById === 'object-detection'
+      ) {
         result = data.result;
+      } else {
+        result = data.result[0][modelResultKeyById];
       }
 
       setResult(result);
