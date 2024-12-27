@@ -106,4 +106,5 @@ export const modelResultKey: { [key: string]: string } = {
   'sentiment-analysis': 'sentiment-analysis',
   'image-classifier': 'image-classifier',
   'object-detection': 'object-detection',
+  ocr: 'generated_text',
 };
