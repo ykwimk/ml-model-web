@@ -29,7 +29,7 @@ export default function ModelDetailContainer({ modelById }: Props) {
     startTransition(async () => {
       let body: string | File = JSON.stringify(text);
 
-      if (file && inputType === 'image') {
+      if (file && (inputType === 'image' || inputType === 'audio')) {
         const base64 = await fileToBase64(file);
 
         body = JSON.stringify({ base64 });
@@ -54,13 +54,12 @@ export default function ModelDetailContainer({ modelById }: Props) {
 
       let result;
 
-      if (modelResultKeyById === 'sentiment-analysis') {
+      if (id === 'sentiment-analysis') {
         result = data.result[0];
-      } else if (
-        modelResultKeyById === 'image-classifier' ||
-        modelResultKeyById === 'object-detection'
-      ) {
+      } else if (id === 'image-classifier' || id === 'object-detection') {
         result = data.result;
+      } else if (id === 'speech-to-text') {
+        result = data.result[modelResultKeyById];
       } else {
         result = data.result[0][modelResultKeyById];
       }

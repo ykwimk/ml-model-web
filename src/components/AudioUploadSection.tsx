@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface Props {
   file: File | null;
@@ -21,13 +21,23 @@ export default function AudioUploadSection({
     const { files } = e.target;
 
     if (files && files[0]) {
-      setPreview(URL.createObjectURL(files[0]));
       onFileChange(files[0]);
     } else {
-      setPreview(null);
       onFileChange(null);
     }
   };
+
+  useEffect(() => {
+    if (!file) {
+      setPreview('');
+      return;
+    }
+
+    const objectUrl = URL.createObjectURL(file);
+    setPreview(objectUrl);
+
+    return () => URL.revokeObjectURL(objectUrl);
+  }, [file]);
 
   return (
     <div className="space-y-4">
@@ -40,7 +50,7 @@ export default function AudioUploadSection({
       />
       {preview && (
         <div className="flex justify-center">
-          <audio controls src={preview} className="mt-2 w-full max-w-md">
+          <audio className="mt-2 w-full max-w-md" src={preview} controls>
             브라우저가 오디오 요소를 지원하지 않습니다.
           </audio>
         </div>

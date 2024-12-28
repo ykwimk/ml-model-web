@@ -27,7 +27,7 @@ export async function POST(
     Authorization: `Bearer ${apiKey}`,
   };
 
-  if (model.inputType === 'image') {
+  if (model.inputType === 'image' || model.inputType === 'audio') {
     // 이미지 입력 타입
     const { base64 } = await request.json();
 

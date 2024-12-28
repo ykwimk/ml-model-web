@@ -107,4 +107,5 @@ export const modelResultKey: { [key: string]: string } = {
   'image-classifier': 'image-classifier',
   'object-detection': 'object-detection',
   ocr: 'generated_text',
+  'speech-to-text': 'text',
 };
