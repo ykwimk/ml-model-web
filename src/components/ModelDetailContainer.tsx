@@ -27,12 +27,14 @@ export default function ModelDetailContainer({ modelById }: Props) {
 
   const handleSubmit = () => {
     startTransition(async () => {
-      let body: string | File = JSON.stringify(text);
+      let body: string | File;
 
       if (file && (inputType === 'image' || inputType === 'audio')) {
         const base64 = await fileToBase64(file);
 
         body = JSON.stringify({ base64 });
+      } else {
+        body = JSON.stringify(text);
       }
 
       const response = await fetch(`/api/models/${modelById.id}`, {
@@ -45,23 +47,31 @@ export default function ModelDetailContainer({ modelById }: Props) {
 
       const id = modelById.id;
       const modelResultKeyById = modelResultKey[id];
-      const data = await response.json();
-
-      if (data.error) {
-        setError(data.error);
-        return;
-      }
 
       let result;
 
-      if (id === 'sentiment-analysis') {
-        result = data.result[0];
-      } else if (id === 'image-classifier' || id === 'object-detection') {
-        result = data.result;
-      } else if (id === 'speech-to-text') {
-        result = data.result[modelResultKeyById];
+      if (id === 'text-to-speech') {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+
+        result = <audio src={url} controls></audio>;
       } else {
-        result = data.result[0][modelResultKeyById];
+        const data = await response.json();
+
+        if (data.error) {
+          setError(data.error);
+          return;
+        }
+
+        if (id === 'sentiment-analysis') {
+          result = data.result[0];
+        } else if (id === 'image-classifier' || id === 'object-detection') {
+          result = data.result;
+        } else if (id === 'speech-to-text') {
+          result = data.result[modelResultKeyById];
+        } else {
+          result = data.result[0][modelResultKeyById];
+        }
       }
 
       setResult(result);

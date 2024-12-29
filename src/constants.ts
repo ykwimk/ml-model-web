@@ -82,11 +82,12 @@ export const MODELS: IModel[] = [
     id: 'text-to-speech',
     name: 'Text-to-Speech',
     caption: '입력한 텍스트를 자연스러운 음성으로 변환하는 모델',
-    baseModel: 'espnet/kan-bayashi_ljspeech_vits',
-    inputType: 'audio',
+    baseModel: 'facebook/mms-tts-yor',
+    inputType: 'text',
     description:
-      'VITS 기반 TTS 모델. LJSpeech 데이터셋으로 학습되어 영어 텍스트를 자연스럽게 음성으로 합성.',
+      '페이스북의 Massively Multilingual Speech(MMS) 프로젝트의 일부로, 요루바(yor) 언어 TTS 모델 체크포인트를 제공.',
   },
+  // https://huggingface.co/MIT/ast-finetuned-audioset-10-10-0.4593 추가
 
   // --- Multimodal (멀티모달) ---
   {

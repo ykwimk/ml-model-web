@@ -59,8 +59,19 @@ export async function POST(
       );
     }
 
-    const data = await response.json();
-    return NextResponse.json({ result: data });
+    if (model.id === 'text-to-speech') {
+      // 음성 출력 타입
+      const blob = await response.blob();
+      return new NextResponse(blob, {
+        headers: {
+          'Content-Type': 'audio/mpeg',
+        },
+      });
+    } else {
+      // 텍스트 출력 타입
+      const data = await response.json();
+      return NextResponse.json({ result: data });
+    }
   } catch (error: any) {
     return NextResponse.json(
       { error: `Internal Server Error: ${error.message}` },
