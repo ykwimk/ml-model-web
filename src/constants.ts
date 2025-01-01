@@ -109,4 +109,5 @@ export const modelResultKey: { [key: string]: string } = {
   'object-detection': 'object-detection',
   ocr: 'generated_text',
   'speech-to-text': 'text',
+  'image-captioning': 'generated_text',
 };
