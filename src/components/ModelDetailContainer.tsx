@@ -46,6 +46,7 @@ export default function ModelDetailContainer({ modelById }: Props) {
         return data.result[0];
       case 'image-classifier':
       case 'object-detection':
+      case 'audio-classification':
         return data.result;
       case 'speech-to-text':
         return data.result[modelResultKey[id]];

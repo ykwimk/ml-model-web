@@ -87,7 +87,15 @@ export const MODELS: IModel[] = [
     description:
       '페이스북의 Massively Multilingual Speech(MMS) 프로젝트의 일부로, 요루바(yor) 언어 TTS 모델 체크포인트를 제공.',
   },
-  // https://huggingface.co/MIT/ast-finetuned-audioset-10-10-0.4593 추가
+  {
+    id: 'audio-classification',
+    name: 'Audio Classification',
+    caption: '오디오를 입력받아 해당 오디오의 종류나 카테고리를 분류하는 모델',
+    baseModel: 'MIT/ast-finetuned-audioset-10-10-0.4593',
+    inputType: 'audio',
+    description:
+      '오디오 스펙트로그램 트랜스포머는 ViT 와 동일 하지만 오디오에 적용. 오디오는 먼저 이미지(스펙트로그램)로 변환된 후 비전 트랜스포머가 적용됩니다. 이 모델은 여러 오디오 분류 벤치마크에서 최첨단 결과를 제공.',
+  },
 
   // --- Multimodal (멀티모달) ---
   {
@@ -110,4 +118,5 @@ export const modelResultKey: { [key: string]: string } = {
   ocr: 'generated_text',
   'speech-to-text': 'text',
   'image-captioning': 'generated_text',
+  'audio-classification:': 'audio-classification',
 };
